@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>每日资讯简报 - 2025-05-06</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #13131c;
+            --surface-2: #1c1c2a;
+            --border: rgba(255,255,255,0.06);
+            --text: #e8e6e3;
+            --text-muted: #8a8898;
+            --accent: #ff6b35;
+            --accent-2: #00d4aa;
+            --accent-3: #ffd700;
+            --tag-beginner: #00d4aa;
+            --tag-intermediate: #ffd700;
+            --tag-advanced: #ff4757;
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        html { font-size: 16px; }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            min-height: 100dvh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* === 背景氛围（手机优化：减小光斑） === */
+        .bg-atmosphere {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .bg-atmosphere::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -30%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,107,53,0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .bg-atmosphere::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            left: -20%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(0,212,170,0.04) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 16px;
+            padding-bottom: calc(40px + var(--safe-bottom));
+        }
+
+        /* === 头部 === */
+        .header {
+            text-align: center;
+            padding: 32px 0 28px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 4px 12px;
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .header-badge .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+        .header h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+        }
+        .header .date {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+        .header .stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+        }
+        .header .stat-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .header .stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* === 方向区块 === */
+        .section {
+            margin-bottom: 28px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .section-icon.ai { background: rgba(255,107,53,0.12); }
+        .section-icon.finance { background: rgba(255,215,0,0.12); }
+        .section-icon.career { background: rgba(0,212,170,0.12); }
+        .section-icon.local { background: rgba(100,149,237,0.12); }
+        .section-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* === 主题卡片 === */
+        .theme-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 14px;
+        }
+        .theme-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            gap: 8px;
+        }
+        .theme-name {
+            font-size: 16px;
+            font-weight: 700;
+            flex: 1;
+            min-width: 0;
+        }
+        .difficulty-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .difficulty-tag.beginner { background: rgba(0,212,170,0.12); color: var(--tag-beginner); }
+        .difficulty-tag.intermediate { background: rgba(255,215,0,0.12); color: var(--tag-intermediate); }
+        .difficulty-tag.advanced { background: rgba(255,71,87,0.12); color: var(--tag-advanced); }
+
+        /* === 多视角解读 === */
+        .multi-perspective {
+            background: var(--surface-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 10px 10px 0;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+        .multi-perspective-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        /* === 文章条目 === */
+        .article-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+        .article-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+        .article-summary {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-left: 2px solid var(--border);
+            line-height: 1.7;
+        }
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .article-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .meta-source { color: var(--accent-2); }
+        .meta-importance { color: var(--accent-3); }
+
+        /* === 术语芯片（手机优化：全宽堆叠） === */
+        .article-terms {
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .term-chip {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .term-name {
+            font-weight: 700;
+            color: var(--accent);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .term-def {
+            color: var(--text-muted);
+        }
+
+        /* === 术语速查 === */
+        .glossary {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 28px;
+        }
+        .glossary-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .glossary-item {
+            display: flex;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+        .glossary-item:last-child { border-bottom: none; }
+        .glossary-term {
+            font-weight: 700;
+            color: var(--accent);
+            white-space: nowrap;
+            min-width: 70px;
+            flex-shrink: 0;
+        }
+        .glossary-def {
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* === 趋势点评 === */
+        .trend-section {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 16px;
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+        .trend-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+        }
+        .trend-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .trend-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 15px;
+            line-height: 2;
+        }
+
+        /* === 页脚 === */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid var(--border);
+            font-size: 11px;
+            color: var(--text-muted);
+            padding-bottom: calc(20px + var(--safe-bottom));
+        }
+
+        /* === 平板及以上 === */
+        @media (min-width: 640px) {
+            .container { padding: 0 24px; }
+            .header { padding: 48px 0 36px; }
+            .header h1 { font-size: 36px; }
+            .theme-card { padding: 24px; }
+            .article-terms {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .term-chip { flex: 0 0 auto; }
+            .glossary { padding: 24px; }
+            .trend-section { padding: 28px 24px; }
+        }
+
+        /* === 桌面端 === */
+        @media (min-width: 1024px) {
+            .container { max-width: 720px; }
+            .header h1 { font-size: 42px; }
+        }
+
+        /* === 暗色模式下的链接优化 === */
+        a {
+            color: var(--accent-2);
+            text-decoration: none;
+        }
+        a:active {
+            opacity: 0.7;
+        }
+
+        /* === iOS 安全区域 === */
+        @supports (padding: max(0px)) {
+            .container {
+                padding-left: max(16px, env(safe-area-inset-left));
+                padding-right: max(16px, env(safe-area-inset-right));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-atmosphere"></div>
+
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="header-badge">
+                <span class="dot"></span>
+                Daily Brief
+            </div>
+            <h1>每日资讯简报</h1>
+            <div class="date">2025 年 5 月 6 日 · 星期二</div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">核心主题</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">篇文章</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">术语注释</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- AI向 -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon ai">🤖</div>
+                <div class="section-title">AI 向</div>
+            </div>
+
+            <div class="theme-card">
+                <div class="theme-header">
+                    <div class="theme-name">GPT-5 正式发布</div>
+                    <span class="difficulty-tag advanced">🔴 深度</span>
+                </div>
+                <div class="multi-perspective">
+                    <div class="multi-perspective-label">📊 多视角解读</div>
+                    <div>量子位侧重技术突破，强调多模态推理能力的飞跃；机器之心关注行业格局变化；36氪从资本市场角度解读。</div>
+                </div>
+                <div class="article-item">
+                    <div class="article-title">OpenAI 发布 GPT-5：多模态推理能力实现质的飞跃</div>
+                    <div class="article-summary">新一代大模型在数学推理、代码生成、多模态理解等维度全面超越前代。</div>
+                    <div class="article-meta">
+                        <span class="meta-source">📌 量子位</span>
+                        <span class="meta-importance">🔥 ⭐⭐⭐⭐⭐</span>
+                        <span>📚 深度</span>
+                    </div>
+                    <div class="article-terms">
+                        <div class="term-chip">
+                            <span class="term-name">多模态</span>
+                            <span class="term-def">能同时处理文本、图像、音频等多种数据类型的 AI 能力</span>
+                        </div>
+                        <div class="term-chip">
+                            <span class="term-name">Benchmark</span>
+                            <span class="term-def">行业标准的 AI 能力测试集，用于衡量模型表现</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-item">
+                    <div class="article-title">GPT-5 发布后：中国 AI 创业者的危与机</div>
+                    <div class="article-summary">分析对国内大模型厂商和 AI 应用创业公司的实际影响。</div>
+                    <div class="article-meta">
+                        <span class="meta-source">📌 机器之心</span>
+                        <span class="meta-importance">🔥 ⭐⭐⭐⭐</span>
+                        <span>📚 进阶</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="theme-header">
+                    <div class="theme-name">Gemini 2.0 更新</div>
+                    <span class="difficulty-tag intermediate">🟡 进阶</span>
+                </div>
+                <div class="article-item">
+                    <div class="article-title">Google Gemini 2.0：与 GPT-5 正面交锋</div>
+                    <div class="article-summary">在长文本处理和代码生成方面展现独特优势。</div>
+                    <div class="article-meta">
+                        <span class="meta-source">📌 36氪</span>
+                        <span class="meta-importance">🔥 ⭐⭐⭐⭐</span>
+                        <span>📚 进阶</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 财经向 -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon finance">💰</div>
+                <div class="section-title">财经 向</div>
+            </div>
+
+            <div class="theme-card">
+                <div class="theme-header">
+                    <div class="theme-name">央行降准</div>
+                    <span class="difficulty-tag beginner">🟢 入门</span>
+                </div>
+                <div class="article-item">
+                    <div class="article-title">央行全面降准 0.5 个百分点，释放约 1 万亿元</div>
+                    <div class="article-summary">旨在支持实体经济，降低融资成本，对股市和楼市均有积极影响。</div>
+                    <div class="article-meta">
+                        <span class="meta-source">📌 财联社</span>
+                        <span class="meta-importance">🔥 ⭐⭐⭐⭐⭐</span>
+                        <span>📚 入门</span>
+                    </div>
+                    <div class="article-terms">
+                        <div class="term-chip">
+                            <span class="term-name">降准</span>
+                            <span class="term-def">降低银行存款准备金率，让银行有更多钱放贷，刺激经济</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="theme-header">
+                    <div class="theme-name">A股动态</div>
+                    <span class="difficulty-tag beginner">🟢 入门</span>
+                </div>
+                <div class="article-item">
+                    <div class="article-title">A股三大指数集体上涨，成交额突破万亿</div>
+                    <div class="article-summary">受降准刺激放量上涨，科技板块领涨，北向资金净流入超百亿。</div>
+                    <div class="article-meta">
+                        <span class="meta-source">📌 券商中国</span>
+                        <span class="meta-importance">🔥 ⭐⭐⭐⭐</span>
+                        <span>📚 入门</span>
+                    </div>
+                    <div class="article-terms">
+                        <div class="term-chip">
+                            <span class="term-name">北向资金</span>
+                            <span class="term-def">通过沪港通/深港通从香港流入 A 股的海外资金</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 求职向 -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon career">💼</div>
+                <div class="section-title">求职 向</div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-header">
+                    <div class="theme-name">春招动态</div>
+                    <span class="difficulty-tag beginner">🟢 入门</span>
+                </div>
+                <div class="multi-perspective">
+                    <div class="multi-perspective-label">📊 多视角解读</div>
+                    <div>牛客网侧重校招汇总，字节开放 3000+ 岗位；拉勾关注社招趋势，AI 岗位薪资同比增长 40%。</div>
+                </div>
+                <div class="article-item">
+                    <div class="article-title">字节跳动春招启动，开放 3000+ 岗位</div>
+                    <div class="article-summary">AI 相关岗位占比显著提升。</div>
+                    <div class="article-meta">
+                        <span class="meta-source">📌 牛客网</span>
+                        <span class="meta-importance">🔥 ⭐⭐⭐</span>
+                        <span>📚 入门</span>
+                    </div>
+                </div>
+                <div class="article-item">
+                    <div class="article-title">AI 岗位薪资同比增长 40%</div>
+                    <div class="article-summary">大模型工程师平均月薪突破 4 万，但竞争愈发激烈。</div>
+                    <div class="article-meta">
+                        <span class="meta-source">📌 拉勾</span>
+                        <span class="meta-importance">🔥 ⭐⭐⭐</span>
+                        <span>📚 入门</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 当地生活向 -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon local">🏠</div>
+                <div class="section-title">当地生活向</div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-header">
+                    <div class="theme-name">便民服务</div>
+                    <span class="difficulty-tag beginner">🟢 入门</span>
+                </div>
+                <div class="article-item">
+                    <div class="article-title">北京地铁昌平线南延段开通</div>
+                    <div class="article-summary">新增 5 站，全程缩短 15 分钟，惠及 50 万居民。</div>
+                    <div class="article-meta">
+                        <span class="meta-source">📌 北京本地宝</span>
+                        <span class="meta-importance">🔥 ⭐⭐⭐</span>
+                        <span>📚 入门</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 术语速查 -->
+        <div class="glossary">
+            <div class="glossary-title">📖 术语速查</div>
+            <div class="glossary-item">
+                <span class="glossary-term">多模态</span>
+                <span class="glossary-def">能同时处理文本、图像、音频等多种数据类型的 AI 能力</span>
+            </div>
+            <div class="glossary-item">
+                <span class="glossary-term">Benchmark</span>
+                <span class="glossary-def">行业标准的 AI 能力测试集</span>
+            </div>
+            <div class="glossary-item">
+                <span class="glossary-term">降准</span>
+                <span class="glossary-def">降低银行存款准备金率，刺激经济</span>
+            </div>
+            <div class="glossary-item">
+                <span class="glossary-term">北向资金</span>
+                <span class="glossary-def">从香港流入 A 股的海外资金</span>
+            </div>
+            <div class="glossary-item">
+                <span class="glossary-term">大模型</span>
+                <span class="glossary-def">参数量巨大的 AI 模型，具备强大理解和生成能力</span>
+            </div>
+        </div>
+
+        <!-- 趋势点评 -->
+        <div class="trend-section">
+            <div class="trend-label">📊 今日趋势点评</div>
+            <div class="trend-text">
+                AI 领域 GPT-5 与 Gemini 2.0 正面交锋，军备竞赛进入新阶段；央行降准释放万亿流动性，科技与金融双轮驱动市场情绪。春招数据印证 AI 人才需求持续升温，技术红利正加速转化为就业红利。
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            由「公众号内容聚合与有声化工具」自动生成 · v2.0
+        </footer>
+    </div>
+</body>
+</html>

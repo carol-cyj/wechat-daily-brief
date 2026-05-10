@@ -1,0 +1,113 @@
+# ============================================================
+# 公众号内容聚合与有声化工具 - 配置文件模板
+# 复制本文件为 config.yaml 并填入你的实际配置
+# ============================================================
+
+# --- 数据源配置 ---
+# 推荐方案：部署 WeWe-RSS（基于微信读书接口，免费全自动）
+# GitHub: https://github.com/cooderl/wewe-rss
+# Docker 一键部署: docker run -d --name wewe-rss -p 4000:4000 -e DATABASE_TYPE=sqlite -e AUTH_CODE=你的密码 -v $(pwd)/data:/app/data cooderl/wewe-rss
+data_source:
+  # WeWe-RSS 服务地址（部署后填写，如 http://localhost:4000）
+  wewe_base_url: ""
+  # WeWe-RSS 认证码（部署时设置的 AUTH_CODE）
+  wewe_auth_code: ""
+
+# --- 四大方向公众号配置 ---
+categories:
+  ai:
+    name: "AI向"
+    description: "头部AI企业动态、产品功能更新、技术突破与行业应用"
+    accounts:
+      - name: "量子位"
+        # WeWe-RSS 部署后，在 Web 界面添加公众号，然后在此填入对应的 RSS 地址
+        # 格式如: http://localhost:4000/feed/xxx
+        rss_url: ""
+        # 手动粘贴文章链接（临时补充用，留空即可）
+        manual_urls: []
+      - name: "机器之心"
+        rss_url: ""
+        manual_urls: []
+      - name: "新智元"
+        rss_url: ""
+        manual_urls: []
+      - name: "36氪"
+        rss_url: ""
+        manual_urls: []
+
+  finance:
+    name: "财经向"
+    description: "宏观数据、产业趋势、龙头企业动态、市场情绪与资金流向"
+    accounts:
+      - name: "财联社"
+        rss_url: ""
+        manual_urls: []
+      - name: "券商中国"
+        rss_url: ""
+        manual_urls: []
+      - name: "华尔街见闻"
+        rss_url: ""
+        manual_urls: []
+
+  career:
+    name: "求职向"
+    description: "名企招聘信息、行业求职趋势、简历技巧与面试干货"
+    accounts:
+      - name: "牛客网"
+        rss_url: ""
+        manual_urls: []
+      - name: "拉勾"
+        rss_url: ""
+        manual_urls: []
+
+  local_life:
+    name: "当地生活向"
+    description: "本地政策通知、便民服务、消费热点与民生动态"
+    accounts:
+      - name: "本地宝"
+        rss_url: ""
+        manual_urls: []
+
+# --- LLM 配置 ---
+# 用于自动提炼文章要点、评估重要性、生成趋势点评
+# 支持 OpenAI / DeepSeek / 智谱 等 OpenAI 兼容接口
+llm:
+  provider: "openai"
+  api_key: "sk-your-api-key-here"
+  base_url: "https://api.openai.com/v1"
+  model: "gpt-4o-mini"
+  max_tokens: 2000
+  temperature: 0.3
+
+# --- TTS 语音合成配置 ---
+tts:
+  # edge: 免费，使用微软 Edge TTS（推荐）
+  # openai: 付费，使用 OpenAI TTS API
+  provider: "edge"
+  edge:
+    voice: "zh-CN-YunxiNeural"  # 男声，适合资讯播报
+    rate: "+5%"
+    volume: "+0%"
+  openai:
+    api_key: ""
+    model: "tts-1"
+    voice: "alloy"
+
+# --- 抓取配置 ---
+fetcher:
+  max_articles_per_account: 5
+  timeout: 15
+  delay: 2
+  max_retries: 3
+
+# --- 简报配置 ---
+brief:
+  top_n: 7
+  min_per_category: 1
+  output_format: "markdown"
+
+# --- 输出配置 ---
+output:
+  dir: "./output"
+  text_filename: "{date}_brief.md"
+  audio_filename: "{date}_brief.mp3"
